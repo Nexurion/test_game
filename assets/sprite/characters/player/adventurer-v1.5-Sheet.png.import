@@ -14,7 +14,7 @@ dest_files=[ "res://.import/adventurer-v1.5-Sheet.png-1b266f11af27994b5a1fa2b834
 
 [params]
 
-compress/mode=0
+compress/mode=3
 compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/bptc_ldr=0
