@@ -134,6 +134,18 @@ tracks/1/keys = {
 "update": 1,
 "values": [ 0, 1, 2, 3, 4, 5 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("collision:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 3, 5.16478 ) ]
+}
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 8.27556, 12.8695 )
@@ -147,7 +159,6 @@ script = ExtResource( 21 )
 [node name="player_sprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 1 )
 animation = "run"
-frame = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -156,10 +167,10 @@ anims/jump = SubResource( 5 )
 anims/run = SubResource( 6 )
 
 [node name="collision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 5.16478 )
+position = Vector2( 3, 5.16478 )
 shape = SubResource( 2 )
 
 [node name="hit_box" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2( -2, 4 )
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 2, 4 )
 shape = SubResource( 3 )
