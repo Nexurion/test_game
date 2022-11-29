@@ -1,23 +1,56 @@
 extends KinematicBody2D
 
-const GRAVITY = 1000
-const WALK_SPEED = 200
+const MOVE_SPEED = 200
+const JUMP_FORCE = 1000
+const POWER_JUMP_FORCE = 2
+const GRAVITY = 50
+const MAX_FALL_SPEED = 1500
 
-var velocity = Vector2()
+onready var anim_player = $AnimationPlayer
+onready var sprite = $player_sprite
 
-func _physics_process(delta):
-	velocity.y += delta * GRAVITY
+var y_velo = 0
+var facing_right = true
 
+
+
+func _physics_process(delta):					#----------------- Controller
+	var move_dir = 0
+	if Input.is_action_pressed("move_right"):
+		move_dir += 1
 	if Input.is_action_pressed("move_left"):
-		velocity.x = -WALK_SPEED
-	elif Input.is_action_pressed("move_right"):
-		velocity.x =  WALK_SPEED
+		move_dir -= 1
+
+	move_and_slide(Vector2(move_dir * MOVE_SPEED, y_velo), Vector2(0, -1))
+	
+	var grounded = is_on_floor()
+	y_velo += GRAVITY
+	if grounded and Input.is_action_just_pressed("jump"):
+		y_velo = -JUMP_FORCE
+	if grounded and y_velo >= 0:
+		y_velo = 5
+	if y_velo > MAX_FALL_SPEED:
+		y_velo = MAX_FALL_SPEED
+	
+	if facing_right and move_dir < 0:
+		flip()
+	if !facing_right and move_dir > 0:
+		flip()
+	
+	if grounded:
+		if move_dir == 0:
+			play_anim("idle")
+		else:
+			play_anim("run")
 	else:
-		velocity.x = 0
+		play_anim("jump")						#----------------- Controller
 
-	# We don't need to multiply velocity by delta because "move_and_slide" already takes delta time into account.
 
-	# The second parameter of "move_and_slide" is the normal pointing up.
-	# In the case of a 2D platformer, in Godot, upward is negative y, which translates to -1 as a normal.
-	move_and_slide(velocity, Vector2(0, -1))
+func flip():
+	facing_right = !facing_right
+	sprite.flip_h = !sprite.flip_h
 
+func play_anim(anim_name):
+	if anim_player.is_playing() and anim_player.current_animation == anim_name:
+		return
+	anim_player.play(anim_name)
