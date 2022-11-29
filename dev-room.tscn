@@ -113,3 +113,6 @@ tile_data = PoolIntArray( -65538, 0, 0, -65537, 0, 1, -131072, 0, 1, -131071, 0,
 position = Vector2( 527.412, 331.86 )
 
 [node name="Camera2D" type="Camera2D" parent="player"]
+current = true
+zoom = Vector2( 0.8, 0.8 )
+limit_bottom = 800
