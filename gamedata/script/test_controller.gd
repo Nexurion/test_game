@@ -14,7 +14,6 @@ var y_velocity = 0
 var facing_right = true
 
 
-
 func play_anim(anim_name):
 	if anim_player.is_playing() and anim_player.current_animation == anim_name:
 		return
@@ -28,8 +27,6 @@ func animation(grounded, move_direction):
 			play_anim("walk")
 	else:
 		play_anim("jump")
-
-
 
 func _physics_process(delta):
 	var move_direction = 0
